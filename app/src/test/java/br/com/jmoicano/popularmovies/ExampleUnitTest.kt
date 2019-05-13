@@ -1,4 +1,4 @@
-package com.example.popularmovies
+package br.com.jmoicano.popularmovies
 
 import org.junit.Test
 

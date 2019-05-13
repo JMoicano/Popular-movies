@@ -1,4 +1,4 @@
-package com.example.popularmovies
+package br.com.jmoicano.popularmovies
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
