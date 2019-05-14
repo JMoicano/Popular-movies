@@ -1,4 +1,4 @@
-package br.com.jmoicano.popularmovies.main.ui.adapter;
+package br.com.jmoicano.popularmovies.main.view.adapter;
 
 import br.com.jmoicano.popularmovies.services.movies_models.MovieResultModel;
 

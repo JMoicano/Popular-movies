@@ -1,7 +1,6 @@
-package br.com.jmoicano.popularmovies.main.ui.adapter;
+package br.com.jmoicano.popularmovies.main.view.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;

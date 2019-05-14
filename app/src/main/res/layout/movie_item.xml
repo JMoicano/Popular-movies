@@ -9,7 +9,7 @@
 
         <variable
             name="onClick"
-            type="br.com.jmoicano.popularmovies.main.ui.adapter.MovieClickListener" />
+            type="br.com.jmoicano.popularmovies.main.view.adapter.MovieClickListener" />
     </data>
 
     <FrameLayout
