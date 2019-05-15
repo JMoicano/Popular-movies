@@ -7,16 +7,16 @@ import androidx.annotation.Nullable;
 public class Resource<T> {
 
     @NonNull
-    public final Status status;
+    public Status status;
     @Nullable
     public final T data;
     @Nullable
-    public final ErrorResponse error;
+    public final ErrorResponse errorResponse;
 
-    public Resource(@NonNull Status status, @Nullable T data, @NonNull ErrorResponse error) {
+    private Resource(@NonNull Status status, @Nullable T data, @Nullable ErrorResponse errorResponse) {
         this.status = status;
         this.data = data;
-        this.error = error;
+        this.errorResponse = errorResponse;
     }
 
     public static <T> Resource<T> success(@NonNull T data) {
@@ -31,5 +31,5 @@ public class Resource<T> {
         return new Resource<>(Status.LOADING, null, null);
     }
 
-    private enum Status {SUCCESS, ERROR, LOADING}
+    public enum Status {SUCCESS, ERROR, LOADING}
 }

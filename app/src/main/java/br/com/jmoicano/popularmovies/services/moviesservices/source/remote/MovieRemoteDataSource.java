@@ -1,4 +1,6 @@
-package br.com.jmoicano.popularmovies.services.movies_services.source.remote;
+package br.com.jmoicano.popularmovies.services.moviesservices.source.remote;
+
+import androidx.lifecycle.LiveData;
 
 import com.google.gson.Gson;
 
@@ -8,8 +10,8 @@ import br.com.jmoicano.popularmovies.services.ServiceGenerator;
 import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
 import br.com.jmoicano.popularmovies.services.model.LiveResource;
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.movies_models.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.movies_services.source.MovieDataSource;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieDataSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +44,7 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public LiveResource<MovieDiscoverResponseModel> getMovies(String sort) {
+    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
         Call<MovieDiscoverResponseModel> call = mDiscoverService.getMovies(sort);
 
         final LiveResource<MovieDiscoverResponseModel> movies = new LiveResource<>();

@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="item"
-            type="br.com.jmoicano.popularmovies.services.movies_models.MovieResultModel" />
+            type="br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel" />
 
         <variable
             name="onClick"
             type="br.com.jmoicano.popularmovies.main.view.adapter.MovieClickListener" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="@{()->onClick.onMovieClick(item)}">
 
         <ImageView
             android:id="@+id/iv_poster_thumb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,1:1.5"
             android:contentDescription="@string/poster_thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/thumb_example" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

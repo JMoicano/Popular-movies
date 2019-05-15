@@ -1,5 +1,6 @@
 package br.com.jmoicano.popularmovies.main.view.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import br.com.jmoicano.popularmovies.R;
 import br.com.jmoicano.popularmovies.databinding.MovieItemBinding;
-import br.com.jmoicano.popularmovies.services.movies_models.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
 
 import static br.com.jmoicano.popularmovies.services.Constants.IMAGE_URL;
 
@@ -38,8 +40,8 @@ public abstract class MovieListAdapter extends RecyclerView.Adapter<MovieListAda
 
         Picasso.get()
                 .load(IMAGE_URL + item.getPosterPath())
-//                .placeholder( TODO: Add loading image)
-//                .error(TODO: Add error image)
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.no_image)
                 .into(holder.mMovieItemBinding.ivPosterThumb);
     }
 
@@ -47,6 +49,8 @@ public abstract class MovieListAdapter extends RecyclerView.Adapter<MovieListAda
     public int getItemCount() {
         return mViewModel.numMovies();
     }
+
+    public void update(){ notifyDataSetChanged(); }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
 

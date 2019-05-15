@@ -1,4 +1,4 @@
-package br.com.jmoicano.popularmovies.services.movies_services.interceptors;
+package br.com.jmoicano.popularmovies.services.moviesservices.interceptors;
 
 import java.io.IOException;
 

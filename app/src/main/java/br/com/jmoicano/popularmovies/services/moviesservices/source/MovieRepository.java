@@ -1,9 +1,10 @@
-package br.com.jmoicano.popularmovies.services.movies_services.source;
+package br.com.jmoicano.popularmovies.services.moviesservices.source;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
-import br.com.jmoicano.popularmovies.services.model.LiveResource;
-import br.com.jmoicano.popularmovies.services.movies_models.MovieDiscoverResponseModel;
+import br.com.jmoicano.popularmovies.services.model.Resource;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
 
 public class MovieRepository implements MovieDataSource {
 
@@ -27,7 +28,7 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public LiveResource<MovieDiscoverResponseModel> getMovies(String sort) {
+    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
         return mMovieDataSource.getMovies(sort);
     }
 }

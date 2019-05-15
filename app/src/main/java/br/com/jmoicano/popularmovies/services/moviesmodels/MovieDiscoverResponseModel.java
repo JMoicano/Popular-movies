@@ -1,4 +1,4 @@
-package br.com.jmoicano.popularmovies.services.movies_models;
+package br.com.jmoicano.popularmovies.services.moviesmodels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
