@@ -1,5 +1,6 @@
 package br.com.jmoicano.popularmovies.main.view.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,9 +12,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.jmoicano.popularmovies.R;
 import br.com.jmoicano.popularmovies.databinding.ActivityMainBinding;
+import br.com.jmoicano.popularmovies.details.view.ui.DetailsActivity;
 import br.com.jmoicano.popularmovies.main.view.adapter.MovieListAdapter;
 import br.com.jmoicano.popularmovies.main.viewmodel.MainActivityViewModel;
 import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
@@ -21,6 +24,7 @@ import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
 
+import static br.com.jmoicano.popularmovies.services.Constants.MOVIE_EXTRA;
 import static br.com.jmoicano.popularmovies.services.Constants.POPULARITY;
 import static br.com.jmoicano.popularmovies.services.Constants.RATE;
 
@@ -74,16 +78,17 @@ public class MainActivity extends AppCompatActivity {
         setupObservers();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         binding.rvMovies.setLayoutManager(layoutManager);
         adapter = new MovieListAdapter(viewModel) {
             @Override
             public void onMovieClick(MovieResultModel movie) {
-                //TODO: start activity for details
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.putExtra(MOVIE_EXTRA, movie);
+                startActivity(intent);
             }
         };
         binding.rvMovies.setAdapter(adapter);
-        setSupportActionBar(binding.toolbar);
     }
 
     @Override

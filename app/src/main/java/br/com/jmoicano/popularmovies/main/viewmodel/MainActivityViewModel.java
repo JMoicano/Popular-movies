@@ -40,7 +40,7 @@ public class MainActivityViewModel extends ViewModel implements MovieListAdapter
                 return getMovies(input);
             }
         });
-        getMovies(POPULARITY);
+        setSort(POPULARITY);
     }
 
     public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {

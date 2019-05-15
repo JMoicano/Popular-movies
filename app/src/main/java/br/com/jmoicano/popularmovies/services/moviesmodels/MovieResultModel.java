@@ -17,6 +17,10 @@ public class MovieResultModel implements Serializable {
     private boolean adult;
 
     @Expose
+    @SerializedName("overview")
+    private String overview;
+
+    @Expose
     @SerializedName("release_date")
     private String releaseDate;
 
@@ -60,9 +64,10 @@ public class MovieResultModel implements Serializable {
     @SerializedName("vote_average")
     private double voteAverage;
 
-    public MovieResultModel(String posterPath, boolean adult, String releaseDate, List<Integer> genreIds, int id, String originalTitle, String originalLenguage, String title, String backdropPath, double popularity, int voteCount, boolean video, double voteAverage) {
+    public MovieResultModel(String posterPath, boolean adult,String overview, String releaseDate, List<Integer> genreIds, int id, String originalTitle, String originalLenguage, String title, String backdropPath, double popularity, int voteCount, boolean video, double voteAverage) {
         this.posterPath = posterPath;
         this.adult = adult;
+        this.overview = overview;
         this.releaseDate = releaseDate;
         this.genreIds = genreIds;
         this.id = id;
@@ -90,6 +95,14 @@ public class MovieResultModel implements Serializable {
 
     public void setAdult(boolean adult) {
         this.adult = adult;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getReleaseDate() {

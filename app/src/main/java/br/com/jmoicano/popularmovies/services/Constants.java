@@ -11,4 +11,6 @@ public final class Constants {
     public static final String SRV_MSG_ERROR = "An errorResponse occoured in the service. Try again later";
     public static final String CONNECTION_MSG_ERROR = "Connection problems.";
     public static final String GENERIC_MSG_ERROR = "Something went wrong :'(";
+
+    public static final String MOVIE_EXTRA = "movieExtra";
 }
