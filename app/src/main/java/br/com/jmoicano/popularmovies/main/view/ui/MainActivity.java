@@ -125,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
     private void setLoading(boolean state) {
         if (state) {
             binding.rvMovies.setVisibility(View.GONE);
-        } else {
             binding.pbLoadging.setVisibility(View.VISIBLE);
+        } else {
+            binding.pbLoadging.setVisibility(View.GONE);
         }
     }
 
