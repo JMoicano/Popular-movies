@@ -1,17 +1,19 @@
 package br.com.jmoicano.popularmovies.main.view.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.jmoicano.popularmovies.R;
@@ -50,19 +52,24 @@ public class MainActivity extends AppCompatActivity {
         Observer<Resource<MovieDiscoverResponseModel>> discoverObserver = new Observer<Resource<MovieDiscoverResponseModel>>() {
             @Override
             public void onChanged(Resource<MovieDiscoverResponseModel> resource) {
-                switch (resource.status){
+                switch (resource.status) {
                     case SUCCESS:
-                        if(resource.data != null){
+                        setLoading(false);
+                        if (resource.data != null) {
                             viewModel.updateMovies(resource.data.getResults());
                             adapter.update();
+                            binding.rvMovies.setVisibility(View.VISIBLE);
                         }
                         break;
                     case ERROR:
-                        if(resource.errorResponse != null){
+                        setLoading(false);
+                        if (resource.errorResponse != null) {
                             ErrorResponse errorResponse = resource.errorResponse;
+                            setError(errorResponse);
                         }
                         break;
                     case LOADING:
+                        setLoading(true);
                         break;
                 }
             }
@@ -113,5 +120,31 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setLoading(boolean state) {
+        if (state) {
+            binding.rvMovies.setVisibility(View.GONE);
+        } else {
+            binding.pbLoadging.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setError(ErrorResponse error) {
+        new AlertDialog.Builder(this)
+                .setMessage(error.getStatusMessage())
+                .setPositiveButton(R.string.try_again, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        viewModel.setSort(POPULARITY);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }
