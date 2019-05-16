@@ -1,10 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="br.com.jmoicano.popularmovies.MainActivity">
+    tools:context="br.com.jmoicano.popularmovies.main.view.ui.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_popularity"
+        android:orderInCategory="1"
+        android:title="@string/most_popular"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_rated"
+        android:orderInCategory="2"
+        android:title="@string/top_rated"
+        app:showAsAction="collapseActionView" />
 </menu>
