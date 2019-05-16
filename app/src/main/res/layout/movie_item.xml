@@ -22,6 +22,7 @@
             android:id="@+id/iv_poster_thumb"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            imageUrl="@{item.posterPath}"
             app:layout_constraintDimensionRatio="h,1:1.5"
             android:contentDescription="@string/poster_thumb"
             app:layout_constraintEnd_toEndOf="parent"

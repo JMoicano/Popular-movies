@@ -7,4 +7,6 @@
     <string name="title_activity_details">Movie Detail</string>
     <string name="title_activity_main">Pop Movies</string>
     <string name="movie_poster">Movie poster</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel">Cancel</string>
 </resources>
