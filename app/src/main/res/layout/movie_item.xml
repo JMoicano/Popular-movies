@@ -25,6 +25,7 @@
             imageUrl="@{item.posterPath}"
             app:layout_constraintDimensionRatio="h,1:1.5"
             android:contentDescription="@string/poster_thumb"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
