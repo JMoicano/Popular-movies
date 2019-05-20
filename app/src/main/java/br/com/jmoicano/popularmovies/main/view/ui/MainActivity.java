@@ -25,6 +25,7 @@ import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
 import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.util.ViewUtils;
 
 import static br.com.jmoicano.popularmovies.services.Constants.MOVIE_EXTRA;
 import static br.com.jmoicano.popularmovies.services.Constants.POPULARITY;
@@ -85,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         setupObservers();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
+        int spanCount = ViewUtils.calculateNoOfColumns(this);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount, RecyclerView.VERTICAL, false);
         binding.rvMovies.setLayoutManager(layoutManager);
         adapter = new MovieListAdapter(viewModel) {
             @Override
