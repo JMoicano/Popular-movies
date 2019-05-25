@@ -1,11 +1,16 @@
 package br.com.jmoicano.popularmovies.services.moviesmodels;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Entity(tableName = "movie")
 public class MovieResultModel implements Serializable {
 
     @Expose
@@ -28,6 +33,7 @@ public class MovieResultModel implements Serializable {
     @SerializedName("genre_ids")
     private List<Integer> genreIds;
 
+    @PrimaryKey
     @Expose
     @SerializedName("id")
     private int id;
@@ -50,6 +56,7 @@ public class MovieResultModel implements Serializable {
 
     @Expose
     @SerializedName("popularity")
+    @ColumnInfo(name = "popular")
     private double popularity;
 
     @Expose
@@ -62,6 +69,7 @@ public class MovieResultModel implements Serializable {
 
     @Expose
     @SerializedName("vote_average")
+    @ColumnInfo(name = "top_rated")
     private double voteAverage;
 
     public MovieResultModel(String posterPath, boolean adult,String overview, String releaseDate, List<Integer> genreIds, int id, String originalTitle, String originalLenguage, String title, String backdropPath, double popularity, int voteCount, boolean video, double voteAverage) {
