@@ -7,6 +7,7 @@ public final class Constants {
     public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
     public static final String POPULARITY = "popular";
     public static final String RATE = "top_rated";
+    public static final String FAVORITE = "favorite";
 
     public static final String SRV_MSG_ERROR = "An errorResponse occoured in the service. Try again later";
     public static final String CONNECTION_MSG_ERROR = "Connection problems.";

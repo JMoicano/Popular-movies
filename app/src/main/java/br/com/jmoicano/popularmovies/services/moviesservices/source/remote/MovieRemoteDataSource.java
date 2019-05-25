@@ -91,13 +91,4 @@ public class MovieRemoteDataSource implements MovieDataSource {
         });
         return movies;
     }
-
-    @Override
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort, boolean local) {
-        if (local) {
-            return null;
-        } else {
-            return getMovies(sort);
-        }
-    }
 }

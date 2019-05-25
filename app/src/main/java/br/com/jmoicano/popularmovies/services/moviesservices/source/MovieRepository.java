@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData;
 import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
 
+import static br.com.jmoicano.popularmovies.services.Constants.FAVORITE;
+
 public class MovieRepository implements MovieDataSource {
 
     private volatile static MovieRepository INSTANCE = null;
@@ -32,15 +34,10 @@ public class MovieRepository implements MovieDataSource {
 
     @Override
     public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
-        return mMovieRemoteDataSource.getMovies(sort);
-    }
-
-    @Override
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort, boolean local) {
-        if (local) {
+        if (sort.equals(FAVORITE)){
             return mMovieLocalDataSource.getMovies(sort);
         } else {
-            return getMovies(sort);
+            return mMovieRemoteDataSource.getMovies(sort);
         }
     }
 }

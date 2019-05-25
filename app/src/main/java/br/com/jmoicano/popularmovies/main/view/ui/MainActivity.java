@@ -21,12 +21,17 @@ import br.com.jmoicano.popularmovies.databinding.ActivityMainBinding;
 import br.com.jmoicano.popularmovies.details.view.ui.DetailsActivity;
 import br.com.jmoicano.popularmovies.main.view.adapter.MovieListAdapter;
 import br.com.jmoicano.popularmovies.main.viewmodel.MainActivityViewModel;
+import br.com.jmoicano.popularmovies.main.viewmodel.MainActivityViewModelFactory;
 import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
 import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieLocalDataSource;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
 import br.com.jmoicano.popularmovies.util.ViewUtils;
 
+import static br.com.jmoicano.popularmovies.services.Constants.FAVORITE;
 import static br.com.jmoicano.popularmovies.services.Constants.MOVIE_EXTRA;
 import static br.com.jmoicano.popularmovies.services.Constants.POPULARITY;
 import static br.com.jmoicano.popularmovies.services.Constants.RATE;
@@ -40,7 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private MovieListAdapter adapter;
 
     private void setupViewModel() {
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        viewModel = ViewModelProviders.of(
+                this,
+                new MainActivityViewModelFactory(
+                        MovieRepository.getInstance(
+                                MovieRemoteDataSource.getInstance(),
+                                MovieLocalDataSource.getInstance(this)
+                        )
+                )).get(MainActivityViewModel.class);
     }
 
     private void setupObservers() {
@@ -118,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_rated:
                 viewModel.setSort(RATE);
+                return true;
+            case R.id.action_favorite:
+                viewModel.setSort(FAVORITE);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

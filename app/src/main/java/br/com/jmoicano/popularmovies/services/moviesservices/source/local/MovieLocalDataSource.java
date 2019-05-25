@@ -24,8 +24,8 @@ public class MovieLocalDataSource implements MovieDataSource {
     }
 
     public static MovieLocalDataSource getInstance(Context context) {
-        if (LOCK == null) {
-            synchronized (MovieLocalDataSource.class) {
+        if (INSTANCE == null) {
+            synchronized (LOCK) {
                 INSTANCE = new MovieLocalDataSource(context);
             }
         }
@@ -44,14 +44,5 @@ public class MovieLocalDataSource implements MovieDataSource {
             }
         });
         return response;
-    }
-
-    @Override
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort, boolean local) {
-        if (local) {
-            return getMovies(sort);
-        } else {
-            return null;
-        }
     }
 }

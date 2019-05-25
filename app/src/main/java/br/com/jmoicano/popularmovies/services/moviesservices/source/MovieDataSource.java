@@ -7,6 +7,4 @@ import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponse
 
 public interface MovieDataSource {
     LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort);
-
-    LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort, boolean local);
 }
