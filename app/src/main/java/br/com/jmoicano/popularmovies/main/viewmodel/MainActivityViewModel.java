@@ -1,6 +1,9 @@
 package br.com.jmoicano.popularmovies.main.viewmodel;
 
+import android.app.Application;
+
 import androidx.arch.core.util.Function;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -15,11 +18,12 @@ import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieLocalDataSource;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
 
 import static br.com.jmoicano.popularmovies.services.Constants.POPULARITY;
 
-public class MainActivityViewModel extends ViewModel implements MovieListAdapterViewModel {
+public class MainActivityViewModel extends AndroidViewModel implements MovieListAdapterViewModel {
 
     private List<MovieResultModel> mMovies;
 
@@ -29,8 +33,9 @@ public class MainActivityViewModel extends ViewModel implements MovieListAdapter
 
     private LiveData<String> mSort;
 
-    public MainActivityViewModel() {
-        repository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance());
+    public MainActivityViewModel(Application application) {
+        super(application);
+        repository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance(), MovieLocalDataSource.getInstance(getApplication()));
         mMovies = new ArrayList<>();
         discoverData = new LiveResource<>();
         mSort = new MutableLiveData<>();

@@ -31,6 +31,10 @@ public class MovieDiscoverResponseModel implements Serializable {
         this.totalPages = totalPages;
     }
 
+    public MovieDiscoverResponseModel(List<MovieResultModel> results) {
+        this.results = results;
+    }
+
     public int getPage() {
         return page;
     }

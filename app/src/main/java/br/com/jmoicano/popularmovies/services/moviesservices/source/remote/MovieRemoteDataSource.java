@@ -24,7 +24,7 @@ import static br.com.jmoicano.popularmovies.services.Constants.SRV_MSG_ERROR;
 public class MovieRemoteDataSource implements MovieDataSource {
 
     private volatile static MovieRemoteDataSource INSTANCE = null;
-
+    private static final Object LOCK = new Object();
     private DiscoverService mDiscoverService;
 
     private MovieRemoteDataSource() {
@@ -33,7 +33,7 @@ public class MovieRemoteDataSource implements MovieDataSource {
 
     public static MovieRemoteDataSource getInstance() {
         if (INSTANCE == null){
-            synchronized (MovieRemoteDataSource.class) {
+            synchronized (LOCK) {
                 if (INSTANCE == null) {
                     INSTANCE = new MovieRemoteDataSource();
                 }
@@ -90,5 +90,14 @@ public class MovieRemoteDataSource implements MovieDataSource {
             }
         });
         return movies;
+    }
+
+    @Override
+    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort, boolean local) {
+        if (local) {
+            return null;
+        } else {
+            return getMovies(sort);
+        }
     }
 }

@@ -10,17 +10,20 @@ public class MovieRepository implements MovieDataSource {
 
     private volatile static MovieRepository INSTANCE = null;
 
-    private MovieDataSource mMovieDataSource;
+    private MovieDataSource mMovieRemoteDataSource;
 
-    private MovieRepository(@NonNull MovieDataSource movieDataSource){
-        this.mMovieDataSource = movieDataSource;
+    private MovieDataSource mMovieLocalDataSource;
+
+    private MovieRepository(@NonNull MovieDataSource movieRemoteDataSource, @NonNull MovieDataSource movieLocalDataSource){
+        this.mMovieRemoteDataSource = movieRemoteDataSource;
+        this.mMovieLocalDataSource = movieLocalDataSource;
     }
 
-    public static MovieRepository getInstance(MovieDataSource movieDataSource){
+    public static MovieRepository getInstance(MovieDataSource movieRemoteDataSource, MovieDataSource movieLocalDataSource){
         if(INSTANCE == null){
             synchronized (MovieRepository.class){
                 if(INSTANCE == null){
-                    INSTANCE = new MovieRepository(movieDataSource);
+                    INSTANCE = new MovieRepository(movieRemoteDataSource, movieLocalDataSource);
                 }
             }
         }
@@ -29,6 +32,15 @@ public class MovieRepository implements MovieDataSource {
 
     @Override
     public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
-        return mMovieDataSource.getMovies(sort);
+        return mMovieRemoteDataSource.getMovies(sort);
+    }
+
+    @Override
+    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort, boolean local) {
+        if (local) {
+            return mMovieLocalDataSource.getMovies(sort);
+        } else {
+            return getMovies(sort);
+        }
     }
 }
