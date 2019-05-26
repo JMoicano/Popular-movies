@@ -37,7 +37,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void setupViewModel() {
         if (getIntent().hasExtra(MOVIE_EXTRA)) {
-            movie = (MovieResultModel) getIntent().getSerializableExtra(MOVIE_EXTRA);
+            movie = getIntent().getParcelableExtra(MOVIE_EXTRA);
             viewModel = ViewModelProviders.of(
                     this,
                     new DetailsActivityViewModelFactory(
