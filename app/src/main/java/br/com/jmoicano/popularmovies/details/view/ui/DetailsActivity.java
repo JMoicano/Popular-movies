@@ -82,6 +82,28 @@ public class DetailsActivity extends AppCompatActivity {
                 viewModel.setFavorite(isChecked);
             }
         });
+
+        binding.tvLabelReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.rvReviews.getVisibility() == View.GONE) {
+                    binding.rvReviews.setVisibility(View.VISIBLE);
+                } else {
+                    binding.rvReviews.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        binding.tvLabelTrailers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.rvTrailers.getVisibility() == View.GONE) {
+                    binding.rvTrailers.setVisibility(View.VISIBLE);
+                } else {
+                    binding.rvTrailers.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 }
