@@ -20,6 +20,32 @@ public class MoviesListModel implements Parcelable {
         this.results = results;
     }
 
+    protected MoviesListModel(Parcel in) {
+        results = in.createTypedArrayList(MovieModel.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(results);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MoviesListModel> CREATOR = new Creator<MoviesListModel>() {
+        @Override
+        public MoviesListModel createFromParcel(Parcel in) {
+            return new MoviesListModel(in);
+        }
+
+        @Override
+        public MoviesListModel[] newArray(int size) {
+            return new MoviesListModel[size];
+        }
+    };
+
     public List<MovieModel> getResults() {
         return results;
     }
@@ -28,28 +54,5 @@ public class MoviesListModel implements Parcelable {
         this.results = results;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeList(results);
-    }
-
-    public MoviesListModel(Parcel in) {
-        in.readList(results, MovieModel.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public MoviesListModel createFromParcel(Parcel in) {
-            return new MoviesListModel(in);
-        }
-
-        public MoviesListModel[] newArray(int size) {
-            return new MoviesListModel[size];
-        }
-    };
 
 }
