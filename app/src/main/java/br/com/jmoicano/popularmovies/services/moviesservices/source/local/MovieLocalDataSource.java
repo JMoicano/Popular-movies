@@ -41,7 +41,7 @@ public class MovieLocalDataSource implements MovieDataSource {
                 = new MediatorLiveData<>();
         response.postValue(Resource.<MovieDiscoverResponseModel>loading());
 
-        response.addSource(mMovieDao.loadAllFavorite(sort), new Observer<List<MovieResultModel>>() {
+        response.addSource(mMovieDao.loadAllFavorite(), new Observer<List<MovieResultModel>>() {
             @Override
             public void onChanged(List<MovieResultModel> movieResultModels) {
                 response.postValue(Resource.success(new MovieDiscoverResponseModel(movieResultModels)));
