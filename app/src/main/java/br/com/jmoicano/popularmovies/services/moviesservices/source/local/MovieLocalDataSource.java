@@ -11,6 +11,8 @@ import java.util.List;
 import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.ReviewsListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.TrailersListModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieDataSource;
 
 public class MovieLocalDataSource implements MovieDataSource {
@@ -45,6 +47,16 @@ public class MovieLocalDataSource implements MovieDataSource {
             }
         });
         return response;
+    }
+
+    @Override
+    public LiveData<Resource<TrailersListModel>> getTrailers(String movieId) {
+        return null;
+    }
+
+    @Override
+    public LiveData<Resource<ReviewsListModel>> getReviews(String movieId) {
+        return null;
     }
 
     @Override
