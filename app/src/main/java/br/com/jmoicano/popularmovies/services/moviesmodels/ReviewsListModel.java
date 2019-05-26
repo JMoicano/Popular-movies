@@ -3,28 +3,30 @@ package br.com.jmoicano.popularmovies.services.moviesmodels;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.room.Ignore;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MoviesListModel implements Parcelable {
+public class ReviewsListModel implements Parcelable {
 
-    @Expose
     @SerializedName("results")
-    private List<MovieModel> results;
+    @Expose
+    private List<ReviewModel> results;
 
-    public MoviesListModel(List<MovieModel> results) {
+    public ReviewsListModel(List<ReviewModel> results) {
         this.results = results;
     }
 
-    public List<MovieModel> getResults() {
+    public ReviewsListModel(Parcel in) {
+        in.readList(results, ReviewModel.class.getClassLoader());
+    }
+
+    public List<ReviewModel> getResults() {
         return results;
     }
 
-    public void setResults(List<MovieModel> results) {
+    public void setResults(List<ReviewModel> results) {
         this.results = results;
     }
 
@@ -38,17 +40,13 @@ public class MoviesListModel implements Parcelable {
         dest.writeList(results);
     }
 
-    public MoviesListModel(Parcel in) {
-        in.readList(results, MovieModel.class.getClassLoader());
-    }
-
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public MoviesListModel createFromParcel(Parcel in) {
-            return new MoviesListModel(in);
+        public MovieModel createFromParcel(Parcel in) {
+            return new MovieModel(in);
         }
 
-        public MoviesListModel[] newArray(int size) {
-            return new MoviesListModel[size];
+        public MovieModel[] newArray(int size) {
+            return new MovieModel[size];
         }
     };
 
