@@ -9,6 +9,9 @@ public final class Constants {
     public static final String RATE = "top_rated";
     public static final String FAVORITE = "favorite";
 
+    public static final String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
+    public static final String YOUTUBE_URI = "vnd.youtube:";
+
     public static final String SRV_MSG_ERROR = "An errorResponse occoured in the service. Try again later";
     public static final String CONNECTION_MSG_ERROR = "Connection problems.";
     public static final String GENERIC_MSG_ERROR = "Something went wrong :'(";

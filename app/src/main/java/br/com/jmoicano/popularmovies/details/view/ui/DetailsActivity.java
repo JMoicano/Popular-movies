@@ -1,6 +1,9 @@
 package br.com.jmoicano.popularmovies.details.view.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -31,6 +34,8 @@ import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieL
 import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
 
 import static br.com.jmoicano.popularmovies.services.Constants.MOVIE_EXTRA;
+import static br.com.jmoicano.popularmovies.services.Constants.YOUTUBE_URI;
+import static br.com.jmoicano.popularmovies.services.Constants.YOUTUBE_URL;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -166,7 +171,14 @@ public class DetailsActivity extends AppCompatActivity {
         trailerAdapter = new TrailerListAdapter(viewModel) {
             @Override
             public void onTrailerClick(TrailerModel trailer) {
-
+                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_URI + trailer.getKey()));
+                Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(YOUTUBE_URL + trailer.getKey()));
+                try {
+                    startActivity(appIntent);
+                } catch (ActivityNotFoundException ex) {
+                    startActivity(webIntent);
+                }
             }
         };
 
