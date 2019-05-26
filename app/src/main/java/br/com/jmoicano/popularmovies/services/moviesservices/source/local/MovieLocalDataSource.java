@@ -2,9 +2,12 @@ package br.com.jmoicano.popularmovies.services.moviesservices.source.local;
 
 import android.content.Context;
 
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 
 import java.util.List;
 
@@ -33,10 +36,11 @@ public class MovieLocalDataSource implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
+    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(final String sort) {
         final MediatorLiveData<Resource<MovieDiscoverResponseModel>> response
                 = new MediatorLiveData<>();
         response.postValue(Resource.<MovieDiscoverResponseModel>loading());
+
         response.addSource(mMovieDao.loadAllFavorite(sort), new Observer<List<MovieResultModel>>() {
             @Override
             public void onChanged(List<MovieResultModel> movieResultModels) {
@@ -44,5 +48,38 @@ public class MovieLocalDataSource implements MovieDataSource {
             }
         });
         return response;
+    }
+
+    @Override
+    public void favoriteMovie(final MovieResultModel movie) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mMovieDao.favoriteMovie(movie);
+            }
+        });
+    }
+
+    @Override
+    public void unfavoriteMovie(final MovieResultModel movie) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mMovieDao.unfavoriteMovie(movie);
+            }
+        });
+    }
+
+    @Override
+    public LiveData<Boolean> isFavorite(final int id) {
+        final MediatorLiveData<Boolean> isFavorite = new MediatorLiveData<>();
+
+        isFavorite.addSource(mMovieDao.countItem(id), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                isFavorite.postValue(integer != 0);
+            }
+        });
+        return isFavorite;
     }
 }

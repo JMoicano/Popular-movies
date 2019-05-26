@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="movie"
-            type="br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel" />
+            name="viewModel"
+            type="br.com.jmoicano.popularmovies.details.viewmodel.DetailsActivityViewModel" />
     </data>
 
         <ScrollView
@@ -35,7 +35,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="20dp"
-                        android:text="@{movie.title}"
+                        android:text="@{viewModel.movie.title}"
                         android:textColor="@color/white"
                         android:textSize="50sp"
                         tools:text="Chappie" />
@@ -43,9 +43,9 @@
 
                 <ImageView
                     android:id="@+id/iv_poster"
+                    imageUrl="@{viewModel.movie.posterPath}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    imageUrl="@{movie.posterPath}"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="8dp"
@@ -67,19 +67,20 @@
 
                 <TextView
                     android:id="@+id/tv_year"
+                    parseReleaseYear="@{viewModel.movie.releaseDate}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:textSize="30sp"
-                    parseReleaseYear="@{movie.releaseDate}"
                     app:layout_constraintStart_toStartOf="@+id/guideline04"
                     app:layout_constraintTop_toBottomOf="@+id/cardView"
                     tools:text="2015" />
 
                 <TextView
                     android:id="@+id/tv_rating"
+                    rating="@{String.valueOf(viewModel.movie.voteAverage)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -87,12 +88,12 @@
                     android:layout_marginTop="8dp"
                     android:textColor="@color/Black"
                     android:textSize="20sp"
-                    rating="@{String.valueOf(movie.voteAverage)}"
                     app:layout_constraintStart_toStartOf="@+id/guideline04"
                     app:layout_constraintTop_toBottomOf="@+id/tv_year"
                     tools:text="8.1/10" />
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -100,12 +101,23 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
+                    android:text="@{viewModel.movie.overview}"
                     android:textSize="20sp"
-                    android:text="@{movie.overview}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_poster"
                     tools:text="Mussum Ipsum, cacilds vidis litro abertis. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl." />
+
+                <ToggleButton
+                    android:id="@+id/favorite_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_rating"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rating"
+                    android:textAllCaps="false"
+                    android:textOff="@string/favorite"
+                    android:textOn="@string/unfavorite"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

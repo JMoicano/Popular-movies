@@ -10,4 +10,6 @@
     <string name="try_again">Try Again</string>
     <string name="cancel">Cancel</string>
     <string name="favorites">Favorites</string>
+    <string name="favorite">Favorite</string>
+    <string name="unfavorite">Unfavorite</string>
 </resources>
