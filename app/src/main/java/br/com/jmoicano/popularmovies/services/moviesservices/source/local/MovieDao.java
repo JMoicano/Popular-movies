@@ -14,8 +14,8 @@ import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
 @Dao
 public interface MovieDao {
 
-    @Query("SELECT * FROM movie ORDER BY :orderBy DESC")
-    LiveData<List<MovieResultModel>> loadAllFavorite(String orderBy);
+    @Query("SELECT * FROM movie")
+    LiveData<List<MovieResultModel>> loadAllFavorite();
 
     @Query("SELECT COUNT (*) FROM movie WHERE id = :id")
     LiveData<Integer> countItem(int id);
