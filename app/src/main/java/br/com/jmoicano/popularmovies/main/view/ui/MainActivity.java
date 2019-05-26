@@ -21,11 +21,17 @@ import br.com.jmoicano.popularmovies.databinding.ActivityMainBinding;
 import br.com.jmoicano.popularmovies.details.view.ui.DetailsActivity;
 import br.com.jmoicano.popularmovies.main.view.adapter.MovieListAdapter;
 import br.com.jmoicano.popularmovies.main.viewmodel.MainActivityViewModel;
+import br.com.jmoicano.popularmovies.main.viewmodel.MainActivityViewModelFactory;
 import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieLocalDataSource;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
+import br.com.jmoicano.popularmovies.util.ViewUtils;
 
+import static br.com.jmoicano.popularmovies.services.Constants.FAVORITE;
 import static br.com.jmoicano.popularmovies.services.Constants.MOVIE_EXTRA;
 import static br.com.jmoicano.popularmovies.services.Constants.POPULARITY;
 import static br.com.jmoicano.popularmovies.services.Constants.RATE;
@@ -39,7 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private MovieListAdapter adapter;
 
     private void setupViewModel() {
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        viewModel = ViewModelProviders.of(
+                this,
+                new MainActivityViewModelFactory(
+                        MovieRepository.getInstance(
+                                MovieRemoteDataSource.getInstance(),
+                                MovieLocalDataSource.getInstance(this)
+                        )
+                )).get(MainActivityViewModel.class);
     }
 
     private void setupObservers() {
@@ -49,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.getMovies(s);
             }
         };
-        Observer<Resource<MovieDiscoverResponseModel>> discoverObserver = new Observer<Resource<MovieDiscoverResponseModel>>() {
+        Observer<Resource<MoviesListModel>> discoverObserver = new Observer<Resource<MoviesListModel>>() {
             @Override
-            public void onChanged(Resource<MovieDiscoverResponseModel> resource) {
+            public void onChanged(Resource<MoviesListModel> resource) {
                 switch (resource.status) {
                     case SUCCESS:
                         setLoading(false);
@@ -85,11 +98,12 @@ public class MainActivity extends AppCompatActivity {
         setupObservers();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
+        int spanCount = ViewUtils.calculateNoOfColumns(this);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount, RecyclerView.VERTICAL, false);
         binding.rvMovies.setLayoutManager(layoutManager);
         adapter = new MovieListAdapter(viewModel) {
             @Override
-            public void onMovieClick(MovieResultModel movie) {
+            public void onMovieClick(MovieModel movie) {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                 intent.putExtra(MOVIE_EXTRA, movie);
                 startActivity(intent);
@@ -116,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_rated:
                 viewModel.setSort(RATE);
+                return true;
+            case R.id.action_favorite:
+                viewModel.setSort(FAVORITE);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

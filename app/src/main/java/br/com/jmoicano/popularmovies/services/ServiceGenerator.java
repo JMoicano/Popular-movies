@@ -1,8 +1,14 @@
 package br.com.jmoicano.popularmovies.services;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.joda.time.LocalDate;
+
 import br.com.jmoicano.popularmovies.BuildConfig;
 import br.com.jmoicano.popularmovies.services.moviesservices.interceptors.AuthorizationInterceptor;
-import okhttp3.HttpUrl;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.local.LocalDateConverter;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.LocalDateAdapter;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -17,9 +23,14 @@ public class ServiceGenerator {
     }
 
 
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .create();
+
+
     private static Retrofit.Builder builder = new Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create());
+            .addConverterFactory(GsonConverterFactory.create(gson));
 
     private static Retrofit retrofit = builder.build();
 

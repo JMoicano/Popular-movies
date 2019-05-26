@@ -7,6 +7,8 @@ import androidx.databinding.BindingAdapter;
 
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.LocalDate;
+
 import br.com.jmoicano.popularmovies.R;
 
 import static br.com.jmoicano.popularmovies.services.Constants.IMAGE_URL;
@@ -27,8 +29,8 @@ public final class BindingAdapters {
     }
 
     @BindingAdapter({"parseReleaseYear"})
-    public static void parseReleaseYear(TextView view, String releaseDate) {
-        String year = releaseDate.split("-")[0];
+    public static void parseReleaseYear(TextView view, LocalDate releaseDate) {
+        String year = releaseDate.year().getAsString();
         view.setText(year);
     }
 

@@ -1,6 +1,5 @@
 package br.com.jmoicano.popularmovies.main.view.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,7 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import br.com.jmoicano.popularmovies.R;
 import br.com.jmoicano.popularmovies.databinding.MovieItemBinding;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 
 import static br.com.jmoicano.popularmovies.services.Constants.IMAGE_URL;
 
@@ -34,15 +33,9 @@ public abstract class MovieListAdapter extends RecyclerView.Adapter<MovieListAda
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        MovieResultModel item = mViewModel.getPosition(position);
+        MovieModel item = mViewModel.getPosition(position);
         holder.bind(item);
         holder.mMovieItemBinding.setOnClick(this);
-
-        Picasso.get()
-                .load(IMAGE_URL + item.getPosterPath())
-                .placeholder(R.drawable.loading)
-                .error(R.drawable.no_image)
-                .into(holder.mMovieItemBinding.ivPosterThumb);
     }
 
     @Override
@@ -61,7 +54,7 @@ public abstract class MovieListAdapter extends RecyclerView.Adapter<MovieListAda
             mMovieItemBinding = itemBinding;
         }
 
-        void bind(MovieResultModel item) {
+        void bind(MovieModel item) {
             mMovieItemBinding.setItem(item);
         }
     }
