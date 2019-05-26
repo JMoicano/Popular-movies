@@ -50,12 +50,12 @@ public class MovieLocalDataSource implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<TrailersListModel>> getTrailers(String movieId) {
+    public LiveData<Resource<TrailersListModel>> getTrailers(int movieId) {
         return null;
     }
 
     @Override
-    public LiveData<Resource<ReviewsListModel>> getReviews(String movieId) {
+    public LiveData<Resource<ReviewsListModel>> getReviews(int movieId) {
         return null;
     }
 

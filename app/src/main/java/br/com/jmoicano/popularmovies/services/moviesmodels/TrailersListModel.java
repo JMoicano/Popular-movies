@@ -10,21 +10,21 @@ import java.util.List;
 
 public class TrailersListModel implements Parcelable {
 
-    @SerializedName("result")
+    @SerializedName("results")
     @Expose
-    private List<TrailerModel> result;
+    private List<TrailerModel> results;
 
-    public TrailersListModel(List<TrailerModel> result) {
-        this.result = result;
+    public TrailersListModel(List<TrailerModel> results) {
+        this.results = results;
     }
 
     protected TrailersListModel(Parcel in) {
-        result = in.createTypedArrayList(TrailerModel.CREATOR);
+        results = in.createTypedArrayList(TrailerModel.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(result);
+        dest.writeTypedList(results);
     }
 
     @Override
@@ -44,11 +44,11 @@ public class TrailersListModel implements Parcelable {
         }
     };
 
-    public List<TrailerModel> getResult() {
-        return result;
+    public List<TrailerModel> getResults() {
+        return results;
     }
 
-    public void setResult(List<TrailerModel> result) {
-        this.result = result;
+    public void setResults(List<TrailerModel> results) {
+        this.results = results;
     }
 }

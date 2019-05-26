@@ -6,6 +6,9 @@ import androidx.lifecycle.LiveData;
 import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.ReviewsListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.TrailersListModel;
+import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
 
 import static br.com.jmoicano.popularmovies.services.Constants.FAVORITE;
 
@@ -40,6 +43,16 @@ public class MovieRepository implements MovieDataSource {
         } else {
             return mMovieRemoteDataSource.getMovies(sort);
         }
+    }
+
+    @Override
+    public LiveData<Resource<TrailersListModel>> getTrailers(int movieId) {
+        return mMovieRemoteDataSource.getTrailers(movieId);
+    }
+
+    @Override
+    public LiveData<Resource<ReviewsListModel>> getReviews(int movieId) {
+        return mMovieRemoteDataSource.getReviews(movieId);
     }
 
     @Override

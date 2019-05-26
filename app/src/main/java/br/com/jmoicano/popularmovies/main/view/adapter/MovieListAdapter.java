@@ -36,12 +36,6 @@ public abstract class MovieListAdapter extends RecyclerView.Adapter<MovieListAda
         MovieModel item = mViewModel.getPosition(position);
         holder.bind(item);
         holder.mMovieItemBinding.setOnClick(this);
-
-        Picasso.get()
-                .load(IMAGE_URL + item.getPosterPath())
-                .placeholder(R.drawable.loading)
-                .error(R.drawable.no_image)
-                .into(holder.mMovieItemBinding.ivPosterThumb);
     }
 
     @Override

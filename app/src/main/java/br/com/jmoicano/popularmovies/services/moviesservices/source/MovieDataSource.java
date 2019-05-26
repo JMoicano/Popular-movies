@@ -11,9 +11,9 @@ import br.com.jmoicano.popularmovies.services.moviesmodels.TrailersListModel;
 public interface MovieDataSource {
     LiveData<Resource<MoviesListModel>> getMovies(String sort);
 
-    LiveData<Resource<TrailersListModel>> getTrailers(String movieId);
+    LiveData<Resource<TrailersListModel>> getTrailers(int movieId);
 
-    LiveData<Resource<ReviewsListModel>> getReviews(String movieId);
+    LiveData<Resource<ReviewsListModel>> getReviews(int movieId);
 
     void favoriteMovie(MovieModel movie);
 

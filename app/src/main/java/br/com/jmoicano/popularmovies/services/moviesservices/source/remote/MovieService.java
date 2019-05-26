@@ -13,8 +13,8 @@ public interface MovieService {
     Call<MoviesListModel> getMovies(@Path("sort") String sort);
 
     @GET("3/movie/{id}/videos")
-    Call<TrailersListModel> getTrailers(@Path("id") String movieId);
+    Call<TrailersListModel> getTrailers(@Path("id") int movieId);
 
     @GET("3/movie/{id}/reviews")
-    Call<ReviewsListModel> getReviews(@Path("id") String movieId);
+    Call<ReviewsListModel> getReviews(@Path("id") int movieId);
 }

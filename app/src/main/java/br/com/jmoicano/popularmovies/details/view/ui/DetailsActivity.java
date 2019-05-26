@@ -1,20 +1,31 @@
 package br.com.jmoicano.popularmovies.details.view.ui;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CompoundButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import android.view.View;
-import android.widget.CompoundButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.jmoicano.popularmovies.R;
 import br.com.jmoicano.popularmovies.databinding.ActivityDetailsBinding;
+import br.com.jmoicano.popularmovies.details.view.adapter.ReviewListAdapter;
+import br.com.jmoicano.popularmovies.details.view.adapter.TrailerListAdapter;
 import br.com.jmoicano.popularmovies.details.viewmodel.DetailsActivityViewModel;
 import br.com.jmoicano.popularmovies.details.viewmodel.DetailsActivityViewModelFactory;
+import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
+import br.com.jmoicano.popularmovies.services.model.Resource;
 import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.ReviewsListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.TrailerModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.TrailersListModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieLocalDataSource;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
@@ -28,6 +39,10 @@ public class DetailsActivity extends AppCompatActivity {
     private DetailsActivityViewModel viewModel;
 
     private ActivityDetailsBinding binding;
+
+    private TrailerListAdapter trailerAdapter;
+
+    private ReviewListAdapter reviewAdapter;
 
     private void setupViewModel() {
         if (getIntent().hasExtra(MOVIE_EXTRA)) {
@@ -59,7 +74,51 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         };
+        Observer<Resource<ReviewsListModel>> reviewObserver = new Observer<Resource<ReviewsListModel>>() {
+            @Override
+            public void onChanged(Resource<ReviewsListModel> resource) {
+                switch (resource.status) {
+                    case SUCCESS:
+                        if (resource.data != null) {
+                            viewModel.updateReview(resource.data.getResults());
+                            reviewAdapter.update();
+                        }
+                        break;
+                    case ERROR:
+                        if (resource.errorResponse != null) {
+                            ErrorResponse errorResponse = resource.errorResponse;
+                            setError(errorResponse);
+                        }
+                        break;
+                    case LOADING:
+                        break;
+                }
+            }
+        };
+        Observer<Resource<TrailersListModel>> trailerObserver = new Observer<Resource<TrailersListModel>>() {
+            @Override
+            public void onChanged(Resource<TrailersListModel> resource) {
+                switch (resource.status) {
+                    case SUCCESS:
+                        if (resource.data != null) {
+                            viewModel.updateTrailer(resource.data.getResults());
+                            trailerAdapter.update();
+                        }
+                        break;
+                    case ERROR:
+                        if (resource.errorResponse != null) {
+                            ErrorResponse errorResponse = resource.errorResponse;
+                            setError(errorResponse);
+                        }
+                        break;
+                    case LOADING:
+                        break;
+                }
+            }
+        };
         viewModel.getFavorite().observe(this, favoriteObserver);
+        viewModel.getReviewList().observe(this, reviewObserver);
+        viewModel.getTrailerList().observe(this, trailerObserver);
     }
 
     @Override
@@ -98,6 +157,37 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        LinearLayoutManager reviewLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        binding.rvReviews.setLayoutManager(reviewLayoutManager);
+        LinearLayoutManager trailerLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        binding.rvTrailers.setLayoutManager(trailerLayoutManager);
+
+        trailerAdapter = new TrailerListAdapter(viewModel) {
+            @Override
+            public void onTrailerClick(TrailerModel trailer) {
+
+            }
+        };
+
+        binding.rvTrailers.setAdapter(trailerAdapter);
+
+        reviewAdapter = new ReviewListAdapter(viewModel);
+
+        binding.rvReviews.setAdapter(reviewAdapter);
+
+    }
+
+    private void setError(ErrorResponse error) {
+        new AlertDialog.Builder(this)
+                .setMessage(error.getStatusMessage())
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 }

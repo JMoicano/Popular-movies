@@ -97,7 +97,7 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<TrailersListModel>> getTrailers(String movieId) {
+    public LiveData<Resource<TrailersListModel>> getTrailers(int movieId) {
         Call<TrailersListModel> call = mMovieService.getTrailers(movieId);
         final LiveResource<TrailersListModel> trailers = new LiveResource<>();
         trailers.postValue(Resource.<TrailersListModel>loading());
@@ -146,7 +146,7 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<ReviewsListModel>> getReviews(String movieId) {
+    public LiveData<Resource<ReviewsListModel>> getReviews(int movieId) {
         Call<ReviewsListModel> call = mMovieService.getReviews(movieId);
         final LiveResource<ReviewsListModel> reviews = new LiveResource<>();
         reviews.postValue(Resource.<ReviewsListModel>loading());

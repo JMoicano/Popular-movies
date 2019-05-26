@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class ReviewModel implements Parcelable {
+public class ReviewModel implements Parcelable {
 
     @SerializedName("author")
     @Expose
