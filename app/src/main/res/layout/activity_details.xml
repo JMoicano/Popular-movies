@@ -93,7 +93,7 @@
                     tools:text="8.1/10" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/tv_overview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -107,6 +107,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_poster"
                     tools:text="Mussum Ipsum, cacilds vidis litro abertis. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl." />
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/Black"
+                    app:layout_constraintStart_toStartOf="@+id/tv_overview"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_overview"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
 
                 <ToggleButton
                     android:id="@+id/favorite_button"
@@ -127,6 +137,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/trailers"
                     android:textColor="@color/colorAccent"
                     android:textSize="20sp"
@@ -135,7 +146,7 @@
                     android:drawableTint="@color/colorAccent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/separator" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_trailers"
