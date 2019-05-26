@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
 
 public class DetailsActivityViewModel extends ViewModel {
@@ -13,12 +13,12 @@ public class DetailsActivityViewModel extends ViewModel {
 
     private LiveData<Boolean> favorite;
 
-    private LiveData<MovieResultModel> mMovie;
+    private LiveData<MovieModel> mMovie;
 
-    public DetailsActivityViewModel(MovieRepository repository, MovieResultModel movie) {
+    public DetailsActivityViewModel(MovieRepository repository, MovieModel movie) {
         this.mRepository = repository;
         mMovie = new MutableLiveData<>();
-        ((MutableLiveData<MovieResultModel>) mMovie).setValue(movie);
+        ((MutableLiveData<MovieModel>) mMovie).setValue(movie);
         favorite = mRepository.isFavorite(movie.getId());
     }
 
@@ -30,7 +30,7 @@ public class DetailsActivityViewModel extends ViewModel {
         ((MutableLiveData<Boolean>) this.favorite).postValue(favorite);
     }
 
-    public LiveData<MovieResultModel> getMovie() {
+    public LiveData<MovieModel> getMovie() {
         return mMovie;
     }
 

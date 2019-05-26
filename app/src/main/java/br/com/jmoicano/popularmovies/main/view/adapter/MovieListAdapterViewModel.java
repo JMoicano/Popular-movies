@@ -1,8 +1,8 @@
 package br.com.jmoicano.popularmovies.main.view.adapter;
 
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 
 public interface MovieListAdapterViewModel {
     int numMovies();
-    MovieResultModel getPosition(int pos);
+    MovieModel getPosition(int pos);
 }

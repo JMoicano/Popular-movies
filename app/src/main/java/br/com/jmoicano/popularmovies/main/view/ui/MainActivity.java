@@ -24,8 +24,8 @@ import br.com.jmoicano.popularmovies.main.viewmodel.MainActivityViewModel;
 import br.com.jmoicano.popularmovies.main.viewmodel.MainActivityViewModelFactory;
 import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieLocalDataSource;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.getMovies(s);
             }
         };
-        Observer<Resource<MovieDiscoverResponseModel>> discoverObserver = new Observer<Resource<MovieDiscoverResponseModel>>() {
+        Observer<Resource<MoviesListModel>> discoverObserver = new Observer<Resource<MoviesListModel>>() {
             @Override
-            public void onChanged(Resource<MovieDiscoverResponseModel> resource) {
+            public void onChanged(Resource<MoviesListModel> resource) {
                 switch (resource.status) {
                     case SUCCESS:
                         setLoading(false);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         binding.rvMovies.setLayoutManager(layoutManager);
         adapter = new MovieListAdapter(viewModel) {
             @Override
-            public void onMovieClick(MovieResultModel movie) {
+            public void onMovieClick(MovieModel movie) {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                 intent.putExtra(MOVIE_EXTRA, movie);
                 startActivity(intent);

@@ -8,24 +8,23 @@ import androidx.room.Ignore;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class MovieDiscoverResponseModel implements Parcelable {
+public class MoviesListModel implements Parcelable {
 
     @Expose
     @SerializedName("results")
-    private List<MovieResultModel> results;
+    private List<MovieModel> results;
 
-    public MovieDiscoverResponseModel(List<MovieResultModel> results) {
+    public MoviesListModel(List<MovieModel> results) {
         this.results = results;
     }
 
-    public List<MovieResultModel> getResults() {
+    public List<MovieModel> getResults() {
         return results;
     }
 
-    public void setResults(List<MovieResultModel> results) {
+    public void setResults(List<MovieModel> results) {
         this.results = results;
     }
 
@@ -40,17 +39,17 @@ public class MovieDiscoverResponseModel implements Parcelable {
     }
 
     @Ignore
-    public MovieDiscoverResponseModel(Parcel in) {
-        in.readList(results, MovieResultModel.class.getClassLoader());
+    public MoviesListModel(Parcel in) {
+        in.readList(results, MovieModel.class.getClassLoader());
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public MovieDiscoverResponseModel createFromParcel(Parcel in) {
-            return new MovieDiscoverResponseModel(in);
+        public MoviesListModel createFromParcel(Parcel in) {
+            return new MoviesListModel(in);
         }
 
-        public MovieDiscoverResponseModel[] newArray(int size) {
-            return new MovieDiscoverResponseModel[size];
+        public MoviesListModel[] newArray(int size) {
+            return new MoviesListModel[size];
         }
     };
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel" />
+            type="br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel" />
 
         <variable
             name="onClick"

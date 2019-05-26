@@ -1,7 +1,5 @@
 package br.com.jmoicano.popularmovies.main.viewmodel;
 
-import android.app.Application;
-
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,21 +12,19 @@ import java.util.List;
 import br.com.jmoicano.popularmovies.main.view.adapter.MovieListAdapterViewModel;
 import br.com.jmoicano.popularmovies.services.model.LiveResource;
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
-import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieLocalDataSource;
-import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
 
 import static br.com.jmoicano.popularmovies.services.Constants.POPULARITY;
 
 public class MainActivityViewModel extends ViewModel implements MovieListAdapterViewModel {
 
-    private List<MovieResultModel> mMovies;
+    private List<MovieModel> mMovies;
 
     private MovieRepository mRepository;
 
-    private LiveData<Resource<MovieDiscoverResponseModel>> discoverData;
+    private LiveData<Resource<MoviesListModel>> discoverData;
 
     private LiveData<String> mSort;
 
@@ -37,24 +33,24 @@ public class MainActivityViewModel extends ViewModel implements MovieListAdapter
         mMovies = new ArrayList<>();
         discoverData = new LiveResource<>();
         mSort = new MutableLiveData<>();
-        discoverData = Transformations.switchMap(mSort, new Function<String, LiveData<Resource<MovieDiscoverResponseModel>>>() {
+        discoverData = Transformations.switchMap(mSort, new Function<String, LiveData<Resource<MoviesListModel>>>() {
             @Override
-            public LiveData<Resource<MovieDiscoverResponseModel>> apply(String input) {
+            public LiveData<Resource<MoviesListModel>> apply(String input) {
                 return getMovies(input);
             }
         });
         setSort(POPULARITY);
     }
 
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
+    public LiveData<Resource<MoviesListModel>> getMovies(String sort) {
         return mRepository.getMovies(sort);
     }
 
-    public void updateMovies(List<MovieResultModel> movies) {
+    public void updateMovies(List<MovieModel> movies) {
         mMovies = movies;
     }
 
-    public LiveData<Resource<MovieDiscoverResponseModel>> getDiscoverData() {
+    public LiveData<Resource<MoviesListModel>> getDiscoverData() {
         return discoverData;
     }
 
@@ -72,7 +68,7 @@ public class MainActivityViewModel extends ViewModel implements MovieListAdapter
     }
 
     @Override
-    public MovieResultModel getPosition(int pos) {
+    public MovieModel getPosition(int pos) {
         return mMovies.get(pos);
     }
 }

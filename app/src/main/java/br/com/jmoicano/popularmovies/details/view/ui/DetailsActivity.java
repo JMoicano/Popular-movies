@@ -2,11 +2,7 @@ package br.com.jmoicano.popularmovies.details.view.ui;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -14,13 +10,11 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import java.io.Serializable;
-
 import br.com.jmoicano.popularmovies.R;
 import br.com.jmoicano.popularmovies.databinding.ActivityDetailsBinding;
 import br.com.jmoicano.popularmovies.details.viewmodel.DetailsActivityViewModel;
 import br.com.jmoicano.popularmovies.details.viewmodel.DetailsActivityViewModelFactory;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieRepository;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.local.MovieLocalDataSource;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.remote.MovieRemoteDataSource;
@@ -29,7 +23,7 @@ import static br.com.jmoicano.popularmovies.services.Constants.MOVIE_EXTRA;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    private MovieResultModel movie;
+    private MovieModel movie;
 
     private DetailsActivityViewModel viewModel;
 

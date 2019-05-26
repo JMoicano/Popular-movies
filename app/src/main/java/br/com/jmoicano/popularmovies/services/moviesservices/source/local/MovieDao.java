@@ -9,20 +9,20 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 
 @Dao
 public interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    LiveData<List<MovieResultModel>> loadAllFavorite();
+    LiveData<List<MovieModel>> loadAllFavorite();
 
     @Query("SELECT COUNT (*) FROM movie WHERE id = :id")
     LiveData<Integer> countItem(int id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void favoriteMovie(MovieResultModel movie);
+    void favoriteMovie(MovieModel movie);
 
     @Delete
-    void unfavoriteMovie(MovieResultModel movie);
+    void unfavoriteMovie(MovieModel movie);
 }

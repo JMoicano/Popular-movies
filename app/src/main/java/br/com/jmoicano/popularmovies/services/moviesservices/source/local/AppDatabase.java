@@ -8,9 +8,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 
-@Database(entities = {MovieResultModel.class}, version = 1, exportSchema = false)
+@Database(entities = {MovieModel.class}, version = 1, exportSchema = false)
 @TypeConverters({LocalDateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 

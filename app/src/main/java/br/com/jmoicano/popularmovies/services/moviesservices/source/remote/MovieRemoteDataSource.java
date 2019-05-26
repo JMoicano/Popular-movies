@@ -10,8 +10,8 @@ import br.com.jmoicano.popularmovies.services.ServiceGenerator;
 import br.com.jmoicano.popularmovies.services.model.ErrorResponse;
 import br.com.jmoicano.popularmovies.services.model.LiveResource;
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieDataSource;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,15 +45,15 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
-        Call<MovieDiscoverResponseModel> call = mDiscoverService.getMovies(sort);
+    public LiveData<Resource<MoviesListModel>> getMovies(String sort) {
+        Call<MoviesListModel> call = mDiscoverService.getMovies(sort);
 
-        final LiveResource<MovieDiscoverResponseModel> movies = new LiveResource<>();
-        movies.setValue(Resource.<MovieDiscoverResponseModel>loading());
+        final LiveResource<MoviesListModel> movies = new LiveResource<>();
+        movies.setValue(Resource.<MoviesListModel>loading());
 
-        call.enqueue(new Callback<MovieDiscoverResponseModel>() {
+        call.enqueue(new Callback<MoviesListModel>() {
             @Override
-            public void onResponse(Call<MovieDiscoverResponseModel> call, Response<MovieDiscoverResponseModel> response) {
+            public void onResponse(Call<MoviesListModel> call, Response<MoviesListModel> response) {
                 if(response.body() != null){
                     if(response.isSuccessful()){
                         movies.setValue(Resource.success(response.body()));
@@ -70,14 +70,14 @@ public class MovieRemoteDataSource implements MovieDataSource {
                                 error = new ErrorResponse(SRV_MSG_ERROR,
                                         response.code());
                             }
-                            movies.setValue(Resource.<MovieDiscoverResponseModel>error(error));
+                            movies.setValue(Resource.<MoviesListModel>error(error));
                         }
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<MovieDiscoverResponseModel> call, Throwable t) {
+            public void onFailure(Call<MoviesListModel> call, Throwable t) {
                 ErrorResponse error;
                 if (t instanceof IOException) {
                     error = new ErrorResponse(CONNECTION_MSG_ERROR,
@@ -86,7 +86,7 @@ public class MovieRemoteDataSource implements MovieDataSource {
                     error = new ErrorResponse(GENERIC_MSG_ERROR,
                             500);
                 }
-                movies.setValue(Resource.<MovieDiscoverResponseModel>error(error));
+                movies.setValue(Resource.<MoviesListModel>error(error));
 
             }
         });
@@ -94,12 +94,12 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public void favoriteMovie(MovieResultModel movie) {
+    public void favoriteMovie(MovieModel movie) {
 
     }
 
     @Override
-    public void unfavoriteMovie(MovieResultModel movie) {
+    public void unfavoriteMovie(MovieModel movie) {
 
     }
 

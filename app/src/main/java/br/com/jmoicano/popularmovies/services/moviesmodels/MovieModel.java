@@ -13,10 +13,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.LocalDate;
 
-import java.io.Serializable;
-
 @Entity(tableName = "movie")
-public class MovieResultModel implements Parcelable {
+public class MovieModel implements Parcelable {
 
     @Expose
     @SerializedName("poster_path")
@@ -49,7 +47,7 @@ public class MovieResultModel implements Parcelable {
     @ColumnInfo(name = "top_rated")
     private double voteAverage;
 
-    public MovieResultModel(String posterPath, String overview, LocalDate releaseDate, int id,String title, double popularity, double voteAverage) {
+    public MovieModel(String posterPath, String overview, LocalDate releaseDate, int id, String title, double popularity, double voteAverage) {
         this.posterPath = posterPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
@@ -132,7 +130,7 @@ public class MovieResultModel implements Parcelable {
     }
 
     @Ignore
-    public MovieResultModel(Parcel in) {
+    public MovieModel(Parcel in) {
         posterPath = in.readString();
         overview = in.readString();
         releaseDate = (LocalDate) in.readSerializable();
@@ -143,12 +141,12 @@ public class MovieResultModel implements Parcelable {
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public MovieResultModel createFromParcel(Parcel in) {
-            return new MovieResultModel(in);
+        public MovieModel createFromParcel(Parcel in) {
+            return new MovieModel(in);
         }
 
-        public MovieResultModel[] newArray(int size) {
-            return new MovieResultModel[size];
+        public MovieModel[] newArray(int size) {
+            return new MovieModel[size];
         }
     };
 

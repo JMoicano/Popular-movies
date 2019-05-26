@@ -3,15 +3,15 @@ package br.com.jmoicano.popularmovies.services.moviesservices.source;
 import androidx.lifecycle.LiveData;
 
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 
 public interface MovieDataSource {
-    LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort);
+    LiveData<Resource<MoviesListModel>> getMovies(String sort);
 
-    void favoriteMovie(MovieResultModel movie);
+    void favoriteMovie(MovieModel movie);
 
-    void unfavoriteMovie(MovieResultModel movie);
+    void unfavoriteMovie(MovieModel movie);
 
     LiveData<Boolean> isFavorite(int id);
 }

@@ -2,18 +2,15 @@ package br.com.jmoicano.popularmovies.services.moviesservices.source.local;
 
 import android.content.Context;
 
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.Transformations;
 
 import java.util.List;
 
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 import br.com.jmoicano.popularmovies.services.moviesservices.source.MovieDataSource;
 
 public class MovieLocalDataSource implements MovieDataSource {
@@ -36,22 +33,22 @@ public class MovieLocalDataSource implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(final String sort) {
-        final MediatorLiveData<Resource<MovieDiscoverResponseModel>> response
+    public LiveData<Resource<MoviesListModel>> getMovies(final String sort) {
+        final MediatorLiveData<Resource<MoviesListModel>> response
                 = new MediatorLiveData<>();
-        response.postValue(Resource.<MovieDiscoverResponseModel>loading());
+        response.postValue(Resource.<MoviesListModel>loading());
 
-        response.addSource(mMovieDao.loadAllFavorite(), new Observer<List<MovieResultModel>>() {
+        response.addSource(mMovieDao.loadAllFavorite(), new Observer<List<MovieModel>>() {
             @Override
-            public void onChanged(List<MovieResultModel> movieResultModels) {
-                response.postValue(Resource.success(new MovieDiscoverResponseModel(movieResultModels)));
+            public void onChanged(List<MovieModel> movieModels) {
+                response.postValue(Resource.success(new MoviesListModel(movieModels)));
             }
         });
         return response;
     }
 
     @Override
-    public void favoriteMovie(final MovieResultModel movie) {
+    public void favoriteMovie(final MovieModel movie) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -61,7 +58,7 @@ public class MovieLocalDataSource implements MovieDataSource {
     }
 
     @Override
-    public void unfavoriteMovie(final MovieResultModel movie) {
+    public void unfavoriteMovie(final MovieModel movie) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import br.com.jmoicano.popularmovies.services.model.Resource;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieDiscoverResponseModel;
-import br.com.jmoicano.popularmovies.services.moviesmodels.MovieResultModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MoviesListModel;
+import br.com.jmoicano.popularmovies.services.moviesmodels.MovieModel;
 
 import static br.com.jmoicano.popularmovies.services.Constants.FAVORITE;
 
@@ -34,7 +34,7 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<MovieDiscoverResponseModel>> getMovies(String sort) {
+    public LiveData<Resource<MoviesListModel>> getMovies(String sort) {
         if (sort.equals(FAVORITE)){
             return mMovieLocalDataSource.getMovies(sort);
         } else {
@@ -43,12 +43,12 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public void favoriteMovie(MovieResultModel movie) {
+    public void favoriteMovie(MovieModel movie) {
         mMovieLocalDataSource.favoriteMovie(movie);
     }
 
     @Override
-    public void unfavoriteMovie(MovieResultModel movie) {
+    public void unfavoriteMovie(MovieModel movie) {
         mMovieLocalDataSource.unfavoriteMovie(movie);
     }
 
