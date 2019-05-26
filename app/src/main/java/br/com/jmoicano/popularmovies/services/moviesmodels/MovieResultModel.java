@@ -1,7 +1,11 @@
 package br.com.jmoicano.popularmovies.services.moviesmodels;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -12,7 +16,7 @@ import org.joda.time.LocalDate;
 import java.io.Serializable;
 
 @Entity(tableName = "movie")
-public class MovieResultModel implements Serializable {
+public class MovieResultModel implements Parcelable {
 
     @Expose
     @SerializedName("poster_path")
@@ -110,4 +114,42 @@ public class MovieResultModel implements Serializable {
     public void setVoteAverage(double voteAverage) {
         this.voteAverage = voteAverage;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(posterPath);
+        dest.writeString(overview);
+        dest.writeSerializable(releaseDate);
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeDouble(popularity);
+        dest.writeDouble(voteAverage);
+    }
+
+    @Ignore
+    public MovieResultModel(Parcel in) {
+        posterPath = in.readString();
+        overview = in.readString();
+        releaseDate = (LocalDate) in.readSerializable();
+        id = in.readInt();
+        title = in.readString();
+        popularity = in.readDouble();
+        voteAverage = in.readDouble();
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public MovieResultModel createFromParcel(Parcel in) {
+            return new MovieResultModel(in);
+        }
+
+        public MovieResultModel[] newArray(int size) {
+            return new MovieResultModel[size];
+        }
+    };
+
 }
